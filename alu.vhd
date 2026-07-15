@@ -21,18 +21,18 @@ ENTITY alu IS
         S_out_alu, Z_out_alu, AC_out_alu, P_out_alu, CY_out_alu: OUT STD_LOGIC
         --  Signal, Zero, Carry Axuliar(bit 3 para 4), Paridade de 1, Carry
 		  
-		  attribute chip_pin of A : signal is ",,,,Y23, Y24, AA22, AA23"; ------------------- SW 17 - SW 14        A
-		  attribute chip_pin: string;
-		  attribute chip_pin of A : signal is "AC25, AB26, AD26, AC26,Y23, Y24, AA22, AA23"; ------------------- SW 17 - SW 14        A
-		  attribute chip_pin of B : signal is "AB22, AB21, AC21, AD21,AA24, AB23, AB24, AC24"; ----------------- SW 13 - SW 10        B
-        attribute chip_pin of CY_in : signal is "AB25";   --------------------------------- SW 9                 C in
-		  attribute chip_pin of op_sel : signal is "AC27, AC28, AB28";   -------------------- SW2 - SW 0           OP
-        attribute chip_pin of result : signal is "E21, E22, E25, E24, H15, G16, G15, F15";   -------------- LEDR 17 - 14         Result
-		  attribute chip_pin of AC_out_alu : signal is "F18";   ----------------------------- LEDR 4               Auxiliar Carry
-        attribute chip_pin of S_out_alu : signal is "F21";   ------------------------------ LEDR 3               Bit de sinal
-		  attribute chip_pin of Z_out_alu : signal is "E19";   ------------------------------ LEDR 2               Bit de Zero
-		  attribute chip_pin of P_out_alu : signal is "F19";   ------------------------------ LEDR 1               Bit de Paridade
-		  attribute chip_pin of CY_out_alu : signal is "G19";   ----------------------------- LEDR 0               Carry over
+		--  attribute chip_pin of A : signal is ",,,,Y23, Y24, AA22, AA23"; ------------------- SW 17 - SW 14        A
+		--  attribute chip_pin: string;
+		--  attribute chip_pin of A : signal is "AC25, AB26, AD26, AC26,Y23, Y24, AA22, AA23"; ------------------- SW 17 - SW 14        A
+		--  attribute chip_pin of B : signal is "AB22, AB21, AC21, AD21,AA24, AB23, AB24, AC24"; ----------------- SW 13 - SW 10        B
+        --  attribute chip_pin of CY_in : signal is "AB25";   --------------------------------- SW 9                 C in
+		--  attribute chip_pin of op_sel : signal is "AC27, AC28, AB28";   -------------------- SW2 - SW 0           OP
+        --  attribute chip_pin of result : signal is "E21, E22, E25, E24, H15, G16, G15, F15";   -------------- LEDR 17 - 14         Result
+		--  attribute chip_pin of AC_out_alu : signal is "F18";   ----------------------------- LEDR 4               Auxiliar Carry
+        --  attribute chip_pin of S_out_alu : signal is "F21";   ------------------------------ LEDR 3               Bit de sinal
+		--  attribute chip_pin of Z_out_alu : signal is "E19";   ------------------------------ LEDR 2               Bit de Zero
+		--  attribute chip_pin of P_out_alu : signal is "F19";   ------------------------------ LEDR 1               Bit de Paridade
+		--  attribute chip_pin of CY_out_alu : signal is "G19";   ----------------------------- LEDR 0               Carry over
     );
 END alu;
 

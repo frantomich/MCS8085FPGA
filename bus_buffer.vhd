@@ -20,15 +20,20 @@ ENTITY bus_buffer IS
 END ENTITY;
 
 ARCHITECTURE bus_buffer_logic OF bus_buffer IS
+
+	SIGNAL wr: STD_LOGIC;
+
 BEGIN
 
 	a <= addr_to_bus(15 DOWNTO 8);
 	
-	PROCESS(ale, write_en, addr_to_bus, data_to_bus, ad)
+	wr <= write_en;
+	
+	PROCESS(ale, wr, addr_to_bus, data_to_bus, ad)
 	BEGIN
 		IF ale = '1' THEN
 			ad <= addr_to_bus(7 DOWNTO 0);
-		ELSIF write_en = '1' THEN
+		ELSIF wr = '1' THEN
 			ad <= data_to_bus;
 		ELSE
 			ad <= (OTHERS => 'Z');

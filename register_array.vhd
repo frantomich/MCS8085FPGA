@@ -40,10 +40,10 @@ BEGIN
 			END CASE;
 		ELSE
 			CASE reg_sel IS
-				WHEN "000" => reg_data_out <= reg_b & reg_c;
-				WHEN "001" => reg_data_out <= reg_d & reg_e;
-				WHEN "010" => reg_data_out <= reg_h & reg_l;
-				WHEN "011" => reg_data_out <= reg_sp;
+				WHEN "000" => reg_pair_data_out <= reg_b & reg_c;
+				WHEN "001" => reg_pair_data_out <= reg_d & reg_e;
+				WHEN "010" => reg_pair_data_out <= reg_h & reg_l;
+				WHEN "011" => reg_pair_data_out <= reg_sp;
 				WHEN OTHERS => NULL;
 			END CASE;
 		END IF;

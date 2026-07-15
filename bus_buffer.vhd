@@ -26,7 +26,6 @@ BEGIN
 	
 	PROCESS(ale, write_en, addr_to_bus, data_to_bus, ad)
 	BEGIN
-	
 		IF ale = '1' THEN
 			ad <= addr_to_bus(7 DOWNTO 0);
 		ELSIF write_en = '1' THEN
@@ -34,7 +33,6 @@ BEGIN
 		ELSE
 			ad <= (OTHERS => 'Z');
 		END IF;
-		
 	END PROCESS;
 	
 	data_from_bus <= ad;

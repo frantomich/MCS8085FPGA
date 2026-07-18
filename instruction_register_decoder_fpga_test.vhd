@@ -81,6 +81,7 @@ BEGIN
 
             dec_is_nop_out    => OPEN,
             dec_is_hlt_out    => dec_is_hlt_internal,
+            dec_is_mem_out    => OPEN,
 
             dec_valid_out     => dec_valid_internal
         );

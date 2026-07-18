@@ -21,13 +21,13 @@ ARCHITECTURE tmp_reg_logic OF tmp_reg IS
 	
 BEGIN
 
-	PROCESS(tmp_reg_clk)
+	PROCESS(tmp_reg_clk, tmp_reg_rst)
 	BEGIN
 		
-		IF tmp_reg_clk'EVENT AND tmp_reg_clk = '1' THEN
-			IF tmp_reg_rst = '1' THEN
-				reg <= (OTHERS => '0');
-			ELSIF tmp_reg_load = '1' THEN
+		IF tmp_reg_rst = '1' THEN
+			reg <= (OTHERS => '0');
+		ELSIF rising_edge(tmp_reg_clk) THEN
+			IF tmp_reg_load = '1' THEN
 				reg <= tmp_reg_data_in;
 			END IF;
 		END IF;

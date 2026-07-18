@@ -1,0 +1,104 @@
+========================================================
+  MCS8085FPGA — Guia Rápido (PT-BR / ES)
+========================================================
+
+--------------------------------------------------------
+PORTUGUÊS
+--------------------------------------------------------
+
+COMO O PROCESSADOR FUNCIONA
+----------------------------
+O cpu_8085 implementa o Intel 8085 em VHDL com uma
+máquina de estados (FSM) de ciclo único por estado:
+
+  FETCH → DECODE → [busca imediatos] → [leitura/escrita
+  de memória] → EXECUTE → FETCH ...
+
+Registradores: A, B, C, D, E, H, L, SP, PC (16 bits)
+Flags: S (sinal), Z (zero), AC (carry auxiliar),
+       P (paridade), CY (carry)
+
+A memória é uma RAM síncrona de 64KB definida em
+memory_8085.vhd. O programa é carregado diretamente
+na inicialização do sinal "mem".
+
+COMO SETAR UM PROGRAMA NO TESTBENCH
+-------------------------------------
+1. Abra o arquivo: memory_8085.vhd
+
+2. Edite o sinal "mem" com os opcodes do seu programa:
+
+   SIGNAL mem : mem_array := (
+       0 => x"3E",  -- MVI A, 05h
+       1 => x"05",
+       2 => x"06",  -- MVI B, 03h
+       3 => x"03",
+       4 => x"80",  -- ADD B
+       5 => x"76",  -- HLT
+       OTHERS => x"00"
+   );
+
+3. Rode a simulação (ModelSim ou GHDL).
+   O testbench (tb_cpu_8085.vhd) para automaticamente
+   quando o CPU executa HLT ou após 10 µs.
+
+4. Verifique os sinais:
+   - acc_dbg  → valor do acumulador A
+   - flags_dbg → S Z AC P CY
+   - pc_dbg   → Program Counter
+   - halted   → '1' quando HLT foi executado
+
+O timeout pode ser ajustado em tb_cpu_8085.vhd:
+   WAIT UNTIL halted = '1' OR NOW > 10 us;
+
+
+--------------------------------------------------------
+ESPAÑOL
+--------------------------------------------------------
+
+CÓMO FUNCIONA EL PROCESADOR
+-----------------------------
+El cpu_8085 implementa el Intel 8085 en VHDL con una
+máquina de estados (FSM) de un ciclo por estado:
+
+  FETCH → DECODE → [busca inmediatos] → [lectura/escritura
+  de memoria] → EXECUTE → FETCH ...
+
+Registros: A, B, C, D, E, H, L, SP, PC (16 bits)
+Flags: S (signo), Z (cero), AC (carry auxiliar),
+       P (paridad), CY (carry)
+
+La memoria es una RAM síncrona de 64KB definida en
+memory_8085.vhd. El programa se carga directamente
+en la inicialización de la señal "mem".
+
+CÓMO CARGAR UN PROGRAMA EN EL TESTBENCH
+-----------------------------------------
+1. Abra el archivo: memory_8085.vhd
+
+2. Edite la señal "mem" con los opcodes de su programa:
+
+   SIGNAL mem : mem_array := (
+       0 => x"3E",  -- MVI A, 05h
+       1 => x"05",
+       2 => x"06",  -- MVI B, 03h
+       3 => x"03",
+       4 => x"80",  -- ADD B
+       5 => x"76",  -- HLT
+       OTHERS => x"00"
+   );
+
+3. Ejecute la simulación (ModelSim o GHDL).
+   El testbench (tb_cpu_8085.vhd) se detiene
+   automáticamente al ejecutar HLT o tras 10 µs.
+
+4. Verifique las señales:
+   - acc_dbg  → valor del acumulador A
+   - flags_dbg → S Z AC P CY
+   - pc_dbg   → Program Counter
+   - halted   → '1' cuando HLT fue ejecutado
+
+El timeout se puede ajustar en tb_cpu_8085.vhd:
+   WAIT UNTIL halted = '1' OR NOW > 10 us;
+
+========================================================

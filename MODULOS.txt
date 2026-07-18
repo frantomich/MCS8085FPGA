@@ -1,0 +1,204 @@
+========================================================
+  MCS8085FPGA — Módulos Principais (PT-BR / ES)
+========================================================
+
+--------------------------------------------------------
+PORTUGUÊS
+--------------------------------------------------------
+
+parity_checker.vhd
+  Calcula a paridade do acumulador (8 bits).
+  Faz XOR de todos os bits e inverte o resultado.
+  Saída '1' = número par de bits 1 (paridade par).
+
+accumulator.vhd
+  Registrador de 8 bits que armazena o resultado
+  das operações da ULA. Possui reset síncrono e
+  sinal de carga (load).
+
+flag_register.vhd
+  Armazena os 5 flags do 8085 após operações:
+    S  = sinal (bit 7 do resultado)
+    Z  = zero (resultado == 0)
+    AC = carry auxiliar (carry do bit 3 para o 4)
+    P  = paridade
+    CY = carry (estouro de 8 bits)
+
+alu.vhd
+  Unidade Lógica e Aritmética. Executa 8 operações
+  selecionadas por op_sel (3 bits):
+    000=ADD  001=ADC  010=SUB  011=SBB
+    100=AND  101=OR   110=XOR  111=CMP
+  Gera os 5 flags junto com o resultado.
+
+rotator_8085.vhd
+  Executa operações de rotação e ajuste do acumulador:
+    RLC, RRC, RAL, RAR (rotações)
+    CMA (complemento de A)
+    CMC (complemento de CY)
+    STC (seta CY)
+    DAA (ajuste decimal)
+
+register_array.vhd
+  Banco de registradores: B, C, D, E, H, L, SP, PC.
+  Suporta acesso de 8 bits (registrador simples) e
+  16 bits (par de registradores: BC, DE, HL, SP, PC).
+
+tmp_reg.vhd
+  Registrador temporário de 8 bits usado internamente
+  pela CPU para guardar operandos lidos da memória
+  antes de executar a instrução.
+
+bus_buffer.vhd
+  Gerencia o barramento multiplexado AD0-AD7 do 8085.
+  Durante ALE=1 coloca o endereço baixo no barramento;
+  durante escrita coloca o dado; caso contrário, alta
+  impedância (Z).
+
+instruction_register_8085.vhd
+  Armazena o opcode da instrução em execução.
+  Carregado no estado FETCH a cada novo ciclo.
+
+instruction_decoder_8085.vhd
+  Decodifica o opcode e gera sinais de controle:
+  tipo de instrução (itype), seleção de registrador,
+  seleção de par, operação da ULA, condição de salto.
+  Lógica puramente combinacional.
+
+timing_control_8085.vhd
+  FSM de controle de ciclos (componente auxiliar).
+  Define a sequência de estados para cada tipo de
+  instrução. Nota: o cpu_8085.vhd possui sua própria
+  FSM interna e não instancia este módulo diretamente.
+
+interrupt_control_8085.vhd
+  Gerencia as 5 fontes de interrupção do 8085:
+    TRAP (não mascarável), RST7.5, RST6.5, RST5.5,
+    INTR (mascarável).
+  Prioridade: TRAP > RST7.5 > RST6.5 > RST5.5 > INTR.
+  Suporta EI/DI e instrução SIM para mascaramento.
+
+memory_8085.vhd
+  RAM síncrona de 64KB. O programa é pré-carregado
+  na inicialização do sinal "mem". Edite este arquivo
+  para mudar o programa executado.
+
+io_ports_8085.vhd
+  256 portas de entrada e 256 de saída (8 bits cada).
+  Instrução IN lê de in_ports; OUT escreve em out_ports.
+
+cpu_8085.vhd
+  Núcleo principal. Integra todos os módulos acima
+  em uma única FSM clocked. Implementa o ciclo completo
+  de fetch-decode-execute do Intel 8085.
+
+top_de2115.vhd
+  Top-level para a placa DE2-115. Conecta CPU e memória
+  aos pinos físicos: KEY(botões), SW(chaves), LEDR e
+  displays de 7 segmentos (HEX0-HEX5).
+
+tb_cpu_8085.vhd
+  Testbench de simulação. Instancia CPU + memória,
+  aplica reset e roda até HLT ou timeout de 10 µs.
+
+
+--------------------------------------------------------
+ESPAÑOL
+--------------------------------------------------------
+
+parity_checker.vhd
+  Calcula la paridad del acumulador (8 bits).
+  Hace XOR de todos los bits e invierte el resultado.
+  Salida '1' = número par de bits en 1 (paridad par).
+
+accumulator.vhd
+  Registro de 8 bits que almacena el resultado de
+  las operaciones de la ALU. Tiene reset síncrono y
+  señal de carga (load).
+
+flag_register.vhd
+  Almacena los 5 flags del 8085 tras operaciones:
+    S  = signo (bit 7 del resultado)
+    Z  = cero (resultado == 0)
+    AC = carry auxiliar (carry del bit 3 al 4)
+    P  = paridad
+    CY = carry (desbordamiento de 8 bits)
+
+alu.vhd
+  Unidad Lógica y Aritmética. Ejecuta 8 operaciones
+  seleccionadas por op_sel (3 bits):
+    000=ADD  001=ADC  010=SUB  011=SBB
+    100=AND  101=OR   110=XOR  111=CMP
+  Genera los 5 flags junto con el resultado.
+
+rotator_8085.vhd
+  Ejecuta operaciones de rotación y ajuste del acumulador:
+    RLC, RRC, RAL, RAR (rotaciones)
+    CMA (complemento de A)
+    CMC (complemento de CY)
+    STC (pone CY a 1)
+    DAA (ajuste decimal)
+
+register_array.vhd
+  Banco de registros: B, C, D, E, H, L, SP, PC.
+  Soporta acceso de 8 bits (registro simple) y
+  16 bits (par de registros: BC, DE, HL, SP, PC).
+
+tmp_reg.vhd
+  Registro temporal de 8 bits usado internamente
+  por la CPU para guardar operandos leídos de memoria
+  antes de ejecutar la instrucción.
+
+bus_buffer.vhd
+  Gestiona el bus multiplexado AD0-AD7 del 8085.
+  Durante ALE=1 coloca la dirección baja en el bus;
+  durante escritura coloca el dato; si no, alta
+  impedancia (Z).
+
+instruction_register_8085.vhd
+  Almacena el opcode de la instrucción en ejecución.
+  Se carga en el estado FETCH en cada nuevo ciclo.
+
+instruction_decoder_8085.vhd
+  Decodifica el opcode y genera señales de control:
+  tipo de instrucción (itype), selección de registro,
+  selección de par, operación de ALU, condición de salto.
+  Lógica puramente combinacional.
+
+timing_control_8085.vhd
+  FSM de control de ciclos (componente auxiliar).
+  Define la secuencia de estados para cada tipo de
+  instrucción. Nota: el cpu_8085.vhd tiene su propia
+  FSM interna y no instancia este módulo directamente.
+
+interrupt_control_8085.vhd
+  Gestiona las 5 fuentes de interrupción del 8085:
+    TRAP (no enmascarable), RST7.5, RST6.5, RST5.5,
+    INTR (enmascarable).
+  Prioridad: TRAP > RST7.5 > RST6.5 > RST5.5 > INTR.
+  Soporta EI/DI e instrucción SIM para enmascaramiento.
+
+memory_8085.vhd
+  RAM síncrona de 64KB. El programa se precarga en
+  la inicialización de la señal "mem". Edite este
+  archivo para cambiar el programa ejecutado.
+
+io_ports_8085.vhd
+  256 puertos de entrada y 256 de salida (8 bits c/u).
+  Instrucción IN lee de in_ports; OUT escribe en out_ports.
+
+cpu_8085.vhd
+  Núcleo principal. Integra todos los módulos anteriores
+  en una única FSM clocked. Implementa el ciclo completo
+  de fetch-decode-execute del Intel 8085.
+
+top_de2115.vhd
+  Top-level para la placa DE2-115. Conecta CPU y memoria
+  a los pines físicos: KEY(botones), SW(switches), LEDR y
+  displays de 7 segmentos (HEX0-HEX5).
+
+tb_cpu_8085.vhd
+  Testbench de simulación. Instancia CPU + memoria,
+  aplica reset y corre hasta HLT o timeout de 10 µs.
+
+========================================================

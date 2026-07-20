@@ -90,8 +90,23 @@ BEGIN
     PROCESS
     BEGIN
         WAIT UNTIL halted = '1' OR NOW > 10 us;
+
         ASSERT halted = '1'
             REPORT "TIMEOUT: CPU did not halt within 10us" SEVERITY WARNING;
+
+        -- Expected results for program: NOP, NOP, HLT
+        ASSERT acc_dbg = x"00"
+            REPORT "FAIL: ACC expected 00h, got " & INTEGER'IMAGE(TO_INTEGER(UNSIGNED(acc_dbg)))
+            SEVERITY ERROR;
+
+        ASSERT flags_dbg = "00000"
+            REPORT "FAIL: FLAGS expected 00000, got " & INTEGER'IMAGE(TO_INTEGER(UNSIGNED(flags_dbg)))
+            SEVERITY ERROR;
+
+        ASSERT pc_dbg = x"0003"
+            REPORT "FAIL: PC expected 0003h, got " & INTEGER'IMAGE(TO_INTEGER(UNSIGNED(pc_dbg)))
+            SEVERITY ERROR;
+
         REPORT "Simulation ended. ACC=" & INTEGER'IMAGE(TO_INTEGER(UNSIGNED(acc_dbg))) &
                " PC=" & INTEGER'IMAGE(TO_INTEGER(UNSIGNED(pc_dbg)))
             SEVERITY NOTE;

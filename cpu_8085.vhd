@@ -318,7 +318,11 @@ BEGIN
                 END CASE;
             WHEN S_MEM_WR2 =>  -- SHLD high byte (H) or XTHL old H to (SP+1)
                 mem_wr_en    <= '1';
-                mem_data_out <= push_h WHEN IR = x"E3" ELSE H;
+                IF (IR = x"E3") THEN
+                    mem_data_out <= push_h;
+                ELSE
+                    mem_data_out <= H;
+                    END IF;
             WHEN S_PUSH_H =>
                 mem_wr_en    <= '1';
                 mem_data_out <= push_h;

@@ -50,7 +50,7 @@ ENTITY interrupt_control_8085 IS
     );
 END ENTITY;
 
-ARCHITECTURE rtl OF interrupt_control_8085 IS
+ARCHITECTURE ic_logic OF interrupt_control_8085 IS
 
     SIGNAL ie_flag  : STD_LOGIC;                    -- Interrupt Enable flip-flop
     SIGNAL mask75, mask65, mask55 : STD_LOGIC;      -- Interrupt masks

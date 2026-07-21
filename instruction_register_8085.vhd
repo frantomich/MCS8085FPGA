@@ -25,7 +25,7 @@ END ENTITY instruction_register_8085;
 
 ------------------------------------------------------------------------------------------
 
-ARCHITECTURE rtl OF instruction_register_8085 IS
+ARCHITECTURE ir_logic OF instruction_register_8085 IS
 
     SIGNAL ir_reg : STD_LOGIC_VECTOR(7 DOWNTO 0);
 
@@ -49,4 +49,4 @@ BEGIN
 
     ir_data_out <= ir_reg;
 
-END ARCHITECTURE rtl;
+END ARCHITECTURE ir_logic;
